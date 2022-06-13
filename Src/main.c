@@ -144,12 +144,12 @@ PUTCHAR_PROTOTYPE
 		// uBrain마다 다를 수 있으므로 각도는 각자 수정
 		 for(i=0; i<30; i++) {
 					 Motor_Stop();
-					 osDelay(10); // 여기 딜레이를 낮추면 좀더 부드럽게 돌 수 있다.
+					 osDelay(20); // 여기 딜레이를 낮추면 좀더 부드럽게 돌 수 있다.
  
 					 motorInterrupt1 = 1;		// 바퀴 회전 값 초기화
 					 Motor_Left();
 																
-					 while(motorInterrupt1 < 30) { 										// 1회 회전시 바퀴 회전수 30만큼 회전 (약 3도) 
+					 while(motorInterrupt1 < 30) { 										// 1회 회전시 바퀴 회전수 30만큼 회전 (약 3도)       회전각 조정 
 										osDelay(1/portTICK_RATE_MS);  // motorInterrupt1 값을 읽어오기 위한 딜레이
 					 }
 					 Motor_Stop();
@@ -161,12 +161,12 @@ void turnRight(){
 		// uBrain마다 다를 수 있으므로 각도는 각자 수정
 		 for(i=0; i<30; i++) {
 					 Motor_Stop();
-					 osDelay(10); // 여기 딜레이를 낮추면 좀더 부드럽게 돌 수 있다.
+					 osDelay(20); // 여기 딜레이를 낮추면 좀더 부드럽게 돌 수 있다.
  
 					 motorInterrupt2 = 1;		// 바퀴 회전 값 초기화
 					 Motor_Right();
 																
-					 while(motorInterrupt2 < 30) { 										// 1회 회전시 바퀴 회전수 30만큼 회전 (약 3도) 
+					 while(motorInterrupt2 < 30) { 										// 1회 회전시 바퀴 회전수 30만큼 회전 (약 3도)      회전각 조정
 										osDelay(1/portTICK_RATE_MS);  // motorInterrupt1 값을 읽어오기 위한 딜레이
 					 }
 					 Motor_Stop();
@@ -177,7 +177,7 @@ void turn6Left() {
 	int i;
 	for(i = 0; i < 2; i++) {
 		Motor_Stop();
-		osDelay(5);
+		osDelay(10);
 		
 		motorInterrupt1 = 1;
 		Motor_Left();
@@ -193,7 +193,7 @@ void turn6Right() {
 	int i;
 	for(i = 0; i < 2; i++) {
 		Motor_Stop();
-		osDelay(5);
+		osDelay(10);
 		
 		motorInterrupt2 = 1;
 		Motor_Right();
@@ -209,7 +209,7 @@ void turn45Left() {
 	int i;
 	for(i = 0; i < 15; i++) {
 		Motor_Stop();
-		osDelay(5);
+		osDelay(10);
 		
 		motorInterrupt1 = 1;
 		Motor_Left();
@@ -225,7 +225,7 @@ void turn45Right() {
 	int i;
 	for(i = 0; i < 15; i++) {
 		Motor_Stop();
-		osDelay(5);
+		osDelay(10);
 		
 		motorInterrupt2 = 1;
 		Motor_Right();
@@ -246,8 +246,11 @@ uint32_t result_right = 0;			// 오른쪽 센서가 too close 해지면 1 변경
 uint32_t result_left = 0;				// 왼쪽 센서가 too close 해지면 1 변경
 uint32_t result_right_for = 0;	// 오른쪽 대각선 센서가 too close 해지면 1 변경
 uint32_t result_left_for = 0;		// 왼쪽 대각선 센서가 too close 해지면 1 변경
-uint32_t result_right_45 = 0;	// 오른쪽 대각선 센서 있으면
-uint32_t result_left_45 = 0;			// 왼쪽 대각선 센서 있으면
+uint32_t result_right_45 = 0;	// 정면에 장애물이 존재하지 않을 경우 
+uint32_t result_left_45 = 0;			// 정면에 장애물이 존재하지 않을 경우
+uint32_t result_right_XF = 0;
+uint32_t result_left_XF  = 0;
+uint32_t result_XF_trigger = 0;    // result_right_XF와 result_left_XF가 둘 다 1이 될 경우 1로 set   -> 이후 둘중에 0이 되는 경우가 발생하게 되면 trigger && XF 해서 해당 방향으로 회전 
 
 void Detect_obstacle(){	// uwDiffCaputre1 : 오른쪽 uwDiffCapture3 : 왼쪽 이용 direction 판단?
 		osDelay(200);  // 태스크 만든 후 약간의 딜레이
@@ -255,32 +258,52 @@ void Detect_obstacle(){	// uwDiffCaputre1 : 오른쪽 uwDiffCapture3 : 왼쪽 이용 di
 
 		for(;;)
 			{
-					osDelay(10);	//물체 인식하기 전에 벽에 박는 경우는 osDelay를 줄여서 좀더 많이 검사하도록 수정한다.
-					if( uwDiffCapture2/58 > 0 && uwDiffCapture2/58 <13  )
+					osDelay(1);	//물체 인식하기 전에 벽에 박는 경우는 osDelay를 줄여서 좀더 많이 검사하도록 수정한다.
+				// 정면	
+				if( uwDiffCapture2/58 > 0 && uwDiffCapture2/58 <16 )
 					{         
 								result = 1;
-								 //  printf("\r\n result = %d", result);
-									 
+								 //  printf("\r\n result = %d", result);				 
 					}
 					else
 					{
 								result = 0;
 								//   printf("\r\n result = %d", result);
+						
 					}
-					if( uwDiffCapture1 / 58 > 0 && uwDiffCapture1 / 58 < 4) {
+					// 왼쪽
+					if( uwDiffCapture1 / 58 > 0 && uwDiffCapture1 / 58 < 3) {
 						result_right = 1;
 					}
 					else {
 						result_right = 0;
 					}
-					if( uwDiffCapture3 / 58 > 0 && uwDiffCapture3 / 58 < 4) {
+					
+					// 오른쪽
+					if( uwDiffCapture3 / 58 > 0 && uwDiffCapture3 / 58 < 3) {
 						result_left = 1;
 					}
 					else {
 						result_left = 0;
-					}					
+					}
+					// 
+				  if (uwDiffCapture1 / 58 > 4 && uwDiffCapture1 / 58 < 25) {
+						result_left_XF = 1;
+					}
+					else {
+						result_left_XF = 0;
+					}
+					if (uwDiffCapture3 / 58 > 4 && uwDiffCapture3 / 58 < 25) {
+						result_right_XF = 1;
+					}						
+					else {
+						result_right_XF = 0;
+					}
+					if (result_left_XF ==1 && result_right_XF ==1) {
+						result_XF_trigger = 1;
+					}
 			}
-}
+		}
 
 void Motor_forandback(){
 		osDelay(200);  // 태스크 만든 후 약간의 딜레이
@@ -307,6 +330,8 @@ void Motor_control(){	//result와 direction으로 어느방향으로 회전할지 결정
 	osDelay(200);  // 태스크 만든 후 약간의 딜레이
 	printf("\r\n Motor_control");
 	Motor_Forward();
+	
+	int delay_value = 800;
 	
    for(;;)
     {
@@ -367,7 +392,7 @@ void Motor_control(){	//result와 direction으로 어느방향으로 회전할지 결정
 						
 						if(direction == 12) {
 							if(result == 1) {
-								if( uwDiffCapture3/58 < 30 && uwDiffCapture3/58 > 0) {
+								/*if( uwDiffCapture3/58 < 30 && uwDiffCapture3/58 > 0) {
 									Motor_Stop();
 									turnRight();
 									direction = 3;
@@ -378,27 +403,39 @@ void Motor_control(){	//result와 direction으로 어느방향으로 회전할지 결정
 									turnLeft();
 									direction = 9;
 									osDelay(100);
+								}*/
+								if( uwDiffCapture1/58 < 30 && uwDiffCapture1/58 > 0) {
+									Motor_Stop();
+									turnLeft();
+									direction = 9;
+									osDelay(100);
+								}
+								else {
+									Motor_Stop();
+									turnRight();
+									direction = 3;
+									osDelay(100);
 								}
 							}
 							else {
 								Motor_Forward();
-							}
-						/*	if(result_right_45 == 1 && result_left_45 == 0) {
+							}   
+							if(result_XF_trigger == 1 && result_left_XF == 0) {      // 배시현식 트리거 코드
 								Motor_Forward();
-								osDelay(300);
+								osDelay(delay_value);
 								Motor_Stop();
-								turnLeft();
+								turnRight();
 								direction = 9;
+								result_XF_trigger = 0;
 							}
-							if(result_right_45 == 0 && result_left_45 == 1) {
+							if(result_XF_trigger == 1 && result_right_XF == 0) {
 								Motor_Forward();
-								osDelay(300);
+								osDelay(delay_value);
 								Motor_Stop();
 								turnLeft();
 								direction = 3;
-							}*/
-							
-							
+								result_XF_trigger = 0;
+							}                                                                           // 배시현식 트리거 코드 끝
 						}
 						
 						if(direction == 3) {
@@ -421,6 +458,22 @@ void Motor_control(){	//result와 direction으로 어느방향으로 회전할지 결정
 							else {
 								Motor_Forward();
 							}
+							if(result_XF_trigger == 1 && result_left_XF == 0) {      // 배시현식 트리거 코드
+								Motor_Forward();
+								osDelay(delay_value);
+								Motor_Stop();
+								turnRight();
+								direction = 6;
+								result_XF_trigger = 0;
+							}
+							if(result_XF_trigger == 1 && result_right_XF == 0) {
+								Motor_Forward();
+								osDelay(delay_value);
+								Motor_Stop();
+								turnLeft();
+								direction = 12;
+								result_XF_trigger = 0;
+							}                                                                           // 배시현식 트리거 코드 끝
 						}
 						
 						if(direction == 9) {
@@ -443,7 +496,24 @@ void Motor_control(){	//result와 direction으로 어느방향으로 회전할지 결정
 							else {
 								Motor_Forward();
 							}
+							if(result_XF_trigger == 1 && result_left_XF == 0) {      // 배시현식 트리거 코드
+								Motor_Forward();
+								osDelay(delay_value);
+								Motor_Stop();
+								turnRight();
+								direction = 12;
+								result_XF_trigger = 0;
+							}
+							if(result_XF_trigger == 1 && result_right_XF == 0) {
+								Motor_Forward();
+								osDelay(delay_value);
+								Motor_Stop();
+								turnLeft();
+								direction = 6;
+								result_XF_trigger = 0;
+							}                                                                           // 배시현식 트리거 코드 끝
 						}
+						
 						
 						if(direction == 6) {
 							if(result == 1) {
@@ -465,6 +535,22 @@ void Motor_control(){	//result와 direction으로 어느방향으로 회전할지 결정
 							else {
 								Motor_Forward();
 							}
+							if(result_XF_trigger == 1 && result_left_XF == 0) {      // 배시현식 트리거 코드
+								Motor_Forward();
+								osDelay(delay_value);
+								Motor_Stop();
+								turnRight();
+								direction = 9;
+								result_XF_trigger = 0;
+							}
+							if(result_XF_trigger == 1 && result_right_XF == 0) {
+								Motor_Forward();
+								osDelay(delay_value);
+								Motor_Stop();
+								turnLeft();
+								direction = 3;
+								result_XF_trigger = 0;
+							}                                                                           // 배시현식 트리거 코드 끝
 						}
     }
    
@@ -488,13 +574,13 @@ void IR_Sensor(){
       else if(uhADCxRight<100) uhADCxRight = 100;
       printf("\r\nIR sensor Right = %d", uhADCxRight);
       
-		 if( uhADCxRight > 1800 && uhADCxRight < 2000) {
+		 if( uhADCxRight > 1900 && uhADCxRight < 2000) {
 						result_right_for = 1;
 					}
 					else {
 						result_right_for = 0;
 					}
-					if( uhADCxLeft > 1800 && uhADCxLeft < 2000) {
+					if( uhADCxLeft > 1900 && uhADCxLeft < 2000) {
 						result_left_for = 1;
 						
 					}
@@ -564,7 +650,7 @@ int main(void)
    sConfig1.OCMode     = TIM_OCMODE_PWM1;
    sConfig1.OCPolarity = TIM_OCPOLARITY_HIGH;
    sConfig1.OCFastMode = TIM_OCFAST_DISABLE;
-   sConfig1.Pulse = 24000;					// 왼바퀴 속도 
+   sConfig1.Pulse = 16500;					// 왼바퀴 속도 
    
    TimHandle1.Instance = TIM8;
    TimHandle1.Init.Prescaler     = uwPrescalerValue;
@@ -580,7 +666,7 @@ int main(void)
    sConfig2.OCMode     = TIM_OCMODE_PWM1;
    sConfig2.OCPolarity = TIM_OCPOLARITY_HIGH;
    sConfig2.OCFastMode = TIM_OCFAST_DISABLE;
-   sConfig2.Pulse = 25000;			// 오른 바퀴 속도 
+   sConfig2.Pulse = 17000;			// 오른 바퀴 속도 
    
    TimHandle2.Instance = TIM4; 
    TimHandle2.Init.Prescaler     = uwPrescalerValue;
