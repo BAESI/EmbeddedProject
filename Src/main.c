@@ -138,19 +138,19 @@ PUTCHAR_PROTOTYPE
   */
 
 
- //¿ÞÂÊÀ¸·Î 90µµ µ¹±âÀ§ÇÑ ÇÔ¼ö
+ //ì™¼ìª½ìœ¼ë¡œ 90ë„ ëŒê¸°ìœ„í•œ í•¨ìˆ˜
  void turnLeft(){
 		 int i;
-		// uBrain¸¶´Ù ´Ù¸¦ ¼ö ÀÖÀ¸¹Ç·Î °¢µµ´Â °¢ÀÚ ¼öÁ¤
+		// uBrainë§ˆë‹¤ ë‹¤ë¥¼ ìˆ˜ ìžˆìœ¼ë¯€ë¡œ ê°ë„ëŠ” ê°ìž ìˆ˜ì •
 		 for(i=0; i<30; i++) {
 					 Motor_Stop();
-					 osDelay(20); // ¿©±â µô·¹ÀÌ¸¦ ³·Ãß¸é Á»´õ ºÎµå·´°Ô µ¹ ¼ö ÀÖ´Ù.
+					 osDelay(20); // ì—¬ê¸° ë”œë ˆì´ë¥¼ ë‚®ì¶”ë©´ ì¢€ë” ë¶€ë“œëŸ½ê²Œ ëŒ ìˆ˜ ìžˆë‹¤.
  
-					 motorInterrupt1 = 1;		// ¹ÙÄû È¸Àü °ª ÃÊ±âÈ­
+					 motorInterrupt1 = 1;		// ë°”í€´ íšŒì „ ê°’ ì´ˆê¸°í™”
 					 Motor_Left();
 																
-					 while(motorInterrupt1 < 30) { 										// 1È¸ È¸Àü½Ã ¹ÙÄû È¸Àü¼ö 30¸¸Å­ È¸Àü (¾à 3µµ)       È¸Àü°¢ Á¶Á¤ 
-										osDelay(1/portTICK_RATE_MS);  // motorInterrupt1 °ªÀ» ÀÐ¾î¿À±â À§ÇÑ µô·¹ÀÌ
+					 while(motorInterrupt1 < 30) { 										// 1íšŒ íšŒì „ì‹œ ë°”í€´ íšŒì „ìˆ˜ 30ë§Œí¼ íšŒì „ (ì•½ 3ë„)       íšŒì „ê° ì¡°ì • 
+										osDelay(1/portTICK_RATE_MS);  // motorInterrupt1 ê°’ì„ ì½ì–´ì˜¤ê¸° ìœ„í•œ ë”œë ˆì´
 					 }
 					 Motor_Stop();
 			}
@@ -158,16 +158,16 @@ PUTCHAR_PROTOTYPE
  
 void turnRight(){
 		 int i;
-		// uBrain¸¶´Ù ´Ù¸¦ ¼ö ÀÖÀ¸¹Ç·Î °¢µµ´Â °¢ÀÚ ¼öÁ¤
+		// uBrainë§ˆë‹¤ ë‹¤ë¥¼ ìˆ˜ ìžˆìœ¼ë¯€ë¡œ ê°ë„ëŠ” ê°ìž ìˆ˜ì •
 		 for(i=0; i<30; i++) {
 					 Motor_Stop();
-					 osDelay(20); // ¿©±â µô·¹ÀÌ¸¦ ³·Ãß¸é Á»´õ ºÎµå·´°Ô µ¹ ¼ö ÀÖ´Ù.
+					 osDelay(20); // ì—¬ê¸° ë”œë ˆì´ë¥¼ ë‚®ì¶”ë©´ ì¢€ë” ë¶€ë“œëŸ½ê²Œ ëŒ ìˆ˜ ìžˆë‹¤.
  
-					 motorInterrupt2 = 1;		// ¹ÙÄû È¸Àü °ª ÃÊ±âÈ­
+					 motorInterrupt2 = 1;		// ë°”í€´ íšŒì „ ê°’ ì´ˆê¸°í™”
 					 Motor_Right();
 																
-					 while(motorInterrupt2 < 30) { 										// 1È¸ È¸Àü½Ã ¹ÙÄû È¸Àü¼ö 30¸¸Å­ È¸Àü (¾à 3µµ)      È¸Àü°¢ Á¶Á¤
-										osDelay(1/portTICK_RATE_MS);  // motorInterrupt1 °ªÀ» ÀÐ¾î¿À±â À§ÇÑ µô·¹ÀÌ
+					 while(motorInterrupt2 < 30) { 										// 1íšŒ íšŒì „ì‹œ ë°”í€´ íšŒì „ìˆ˜ 30ë§Œí¼ íšŒì „ (ì•½ 3ë„)      íšŒì „ê° ì¡°ì •
+										osDelay(1/portTICK_RATE_MS);  // motorInterrupt1 ê°’ì„ ì½ì–´ì˜¤ê¸° ìœ„í•œ ë”œë ˆì´
 					 }
 					 Motor_Stop();
 			}
@@ -241,25 +241,25 @@ void turn45Right() {
 /*********************************  task ************************************/
 uint32_t result = 0;
 uint32_t forward = 0;
-uint32_t direction = 12;        // 12 : 12½Ã¹æÇâ  /  3: 3½Ã¹æÇâ   /  6: 6½Ã¹æÇâ  / 9: 9½Ã¹æÇâ
-uint32_t result_right = 0;			// ¿À¸¥ÂÊ ¼¾¼­°¡ too close ÇØÁö¸é 1 º¯°æ
-uint32_t result_left = 0;				// ¿ÞÂÊ ¼¾¼­°¡ too close ÇØÁö¸é 1 º¯°æ
-uint32_t result_right_for = 0;	// ¿À¸¥ÂÊ ´ë°¢¼± ¼¾¼­°¡ too close ÇØÁö¸é 1 º¯°æ
-uint32_t result_left_for = 0;		// ¿ÞÂÊ ´ë°¢¼± ¼¾¼­°¡ too close ÇØÁö¸é 1 º¯°æ
-uint32_t result_right_45 = 0;	// Á¤¸é¿¡ Àå¾Ö¹°ÀÌ Á¸ÀçÇÏÁö ¾ÊÀ» °æ¿ì 
-uint32_t result_left_45 = 0;			// Á¤¸é¿¡ Àå¾Ö¹°ÀÌ Á¸ÀçÇÏÁö ¾ÊÀ» °æ¿ì
+uint32_t direction = 12;        // 12 : 12ì‹œë°©í–¥  /  3: 3ì‹œë°©í–¥   /  6: 6ì‹œë°©í–¥  / 9: 9ì‹œë°©í–¥
+uint32_t result_right = 0;			// ì˜¤ë¥¸ìª½ ì„¼ì„œê°€ too close í•´ì§€ë©´ 1 ë³€ê²½
+uint32_t result_left = 0;				// ì™¼ìª½ ì„¼ì„œê°€ too close í•´ì§€ë©´ 1 ë³€ê²½
+uint32_t result_right_for = 0;	// ì˜¤ë¥¸ìª½ ëŒ€ê°ì„  ì„¼ì„œê°€ too close í•´ì§€ë©´ 1 ë³€ê²½
+uint32_t result_left_for = 0;		// ì™¼ìª½ ëŒ€ê°ì„  ì„¼ì„œê°€ too close í•´ì§€ë©´ 1 ë³€ê²½
+uint32_t result_right_45 = 0;	// ì •ë©´ì— ìž¥ì• ë¬¼ì´ ì¡´ìž¬í•˜ì§€ ì•Šì„ ê²½ìš° 
+uint32_t result_left_45 = 0;			// ì •ë©´ì— ìž¥ì• ë¬¼ì´ ì¡´ìž¬í•˜ì§€ ì•Šì„ ê²½ìš°
 uint32_t result_right_XF = 0;
 uint32_t result_left_XF  = 0;
-uint32_t result_XF_trigger = 0;    // result_right_XF¿Í result_left_XF°¡ µÑ ´Ù 1ÀÌ µÉ °æ¿ì 1·Î set   -> ÀÌÈÄ µÑÁß¿¡ 0ÀÌ µÇ´Â °æ¿ì°¡ ¹ß»ýÇÏ°Ô µÇ¸é trigger && XF ÇØ¼­ ÇØ´ç ¹æÇâÀ¸·Î È¸Àü 
+uint32_t result_XF_trigger = 0;    // result_right_XFì™€ result_left_XFê°€ ë‘˜ ë‹¤ 1ì´ ë  ê²½ìš° 1ë¡œ set   -> ì´í›„ ë‘˜ì¤‘ì— 0ì´ ë˜ëŠ” ê²½ìš°ê°€ ë°œìƒí•˜ê²Œ ë˜ë©´ trigger && XF í•´ì„œ í•´ë‹¹ ë°©í–¥ìœ¼ë¡œ íšŒì „ 
 
-void Detect_obstacle(){	// uwDiffCaputre1 : ¿À¸¥ÂÊ uwDiffCapture3 : ¿ÞÂÊ ÀÌ¿ë direction ÆÇ´Ü?
-		osDelay(200);  // ÅÂ½ºÅ© ¸¸µç ÈÄ ¾à°£ÀÇ µô·¹ÀÌ
+void Detect_obstacle(){	// uwDiffCaputre1 : ì˜¤ë¥¸ìª½ uwDiffCapture3 : ì™¼ìª½ ì´ìš© direction íŒë‹¨?
+		osDelay(200);  // íƒœìŠ¤í¬ ë§Œë“  í›„ ì•½ê°„ì˜ ë”œë ˆì´
 		printf("\r\n Detect_obstacle");
 
 		for(;;)
 			{
-					osDelay(1);	//¹°Ã¼ ÀÎ½ÄÇÏ±â Àü¿¡ º®¿¡ ¹Ú´Â °æ¿ì´Â osDelay¸¦ ÁÙ¿©¼­ Á»´õ ¸¹ÀÌ °Ë»çÇÏµµ·Ï ¼öÁ¤ÇÑ´Ù.
-				// Á¤¸é	
+					osDelay(1);	//ë¬¼ì²´ ì¸ì‹í•˜ê¸° ì „ì— ë²½ì— ë°•ëŠ” ê²½ìš°ëŠ” osDelayë¥¼ ì¤„ì—¬ì„œ ì¢€ë” ë§Žì´ ê²€ì‚¬í•˜ë„ë¡ ìˆ˜ì •í•œë‹¤.
+				// ì •ë©´	
 				if( uwDiffCapture2/58 > 0 && uwDiffCapture2/58 <16 )
 					{         
 								result = 1;
@@ -271,7 +271,7 @@ void Detect_obstacle(){	// uwDiffCaputre1 : ¿À¸¥ÂÊ uwDiffCapture3 : ¿ÞÂÊ ÀÌ¿ë di
 								//   printf("\r\n result = %d", result);
 						
 					}
-					// ¿ÞÂÊ
+					// ì™¼ìª½
 					if( uwDiffCapture1 / 58 > 0 && uwDiffCapture1 / 58 < 3) {
 						result_right = 1;
 					}
@@ -279,7 +279,7 @@ void Detect_obstacle(){	// uwDiffCaputre1 : ¿À¸¥ÂÊ uwDiffCapture3 : ¿ÞÂÊ ÀÌ¿ë di
 						result_right = 0;
 					}
 					
-					// ¿À¸¥ÂÊ
+					// ì˜¤ë¥¸ìª½
 					if( uwDiffCapture3 / 58 > 0 && uwDiffCapture3 / 58 < 3) {
 						result_left = 1;
 					}
@@ -306,7 +306,7 @@ void Detect_obstacle(){	// uwDiffCaputre1 : ¿À¸¥ÂÊ uwDiffCapture3 : ¿ÞÂÊ ÀÌ¿ë di
 		}
 
 void Motor_forandback(){
-		osDelay(200);  // ÅÂ½ºÅ© ¸¸µç ÈÄ ¾à°£ÀÇ µô·¹ÀÌ
+		osDelay(200);  // íƒœìŠ¤í¬ ë§Œë“  í›„ ì•½ê°„ì˜ ë”œë ˆì´
 		printf("\r\n Motor_control");
 		Motor_Forward();
 		
@@ -326,12 +326,12 @@ void Motor_forandback(){
    
 }
 
-void Motor_control(){	//result¿Í directionÀ¸·Î ¾î´À¹æÇâÀ¸·Î È¸ÀüÇÒÁö °áÁ¤
-	osDelay(200);  // ÅÂ½ºÅ© ¸¸µç ÈÄ ¾à°£ÀÇ µô·¹ÀÌ
+void Motor_control(){	//resultì™€ directionìœ¼ë¡œ ì–´ëŠë°©í–¥ìœ¼ë¡œ íšŒì „í• ì§€ ê²°ì •
+	osDelay(200);  // íƒœìŠ¤í¬ ë§Œë“  í›„ ì•½ê°„ì˜ ë”œë ˆì´
 	printf("\r\n Motor_control");
 	Motor_Forward();
 	
-	int delay_value = 800;
+	int delay_value = 1000;
 	
    for(;;)
     {
@@ -344,7 +344,7 @@ void Motor_control(){	//result¿Í directionÀ¸·Î ¾î´À¹æÇâÀ¸·Î È¸ÀüÇÒÁö °áÁ¤
 								Motor_Stop();
 								direction = 3;
 								result = 0;
-								osDelay(2000); // µ¹°í³­ ÈÄ¿¡ 2ÃÊ°£ µô·¹ÀÌ¸¦ ÁÜÀ¸·Î½á turn È®ÀÎÇØº½(³ªÁß¿¡ Áö¿ò)
+								osDelay(2000); // ëŒê³ ë‚œ í›„ì— 2ì´ˆê°„ ë”œë ˆì´ë¥¼ ì¤Œìœ¼ë¡œì¨ turn í™•ì¸í•´ë´„(ë‚˜ì¤‘ì— ì§€ì›€)
 							}
 							if(direction == 3) {
 								Motor_Stop();
@@ -420,7 +420,7 @@ void Motor_control(){	//result¿Í directionÀ¸·Î ¾î´À¹æÇâÀ¸·Î È¸ÀüÇÒÁö °áÁ¤
 							else {
 								Motor_Forward();
 							}   
-							if(result_XF_trigger == 1 && result_left_XF == 0) {      // ¹è½ÃÇö½Ä Æ®¸®°Å ÄÚµå
+							if(result_XF_trigger == 1 && result_left_XF == 0) {      // ë°°ì‹œí˜„ì‹ íŠ¸ë¦¬ê±° ì½”ë“œ
 								Motor_Forward();
 								osDelay(delay_value);
 								Motor_Stop();
@@ -435,7 +435,7 @@ void Motor_control(){	//result¿Í directionÀ¸·Î ¾î´À¹æÇâÀ¸·Î È¸ÀüÇÒÁö °áÁ¤
 								turnLeft();
 								direction = 3;
 								result_XF_trigger = 0;
-							}                                                                           // ¹è½ÃÇö½Ä Æ®¸®°Å ÄÚµå ³¡
+							}                                                                           // ë°°ì‹œí˜„ì‹ íŠ¸ë¦¬ê±° ì½”ë“œ ë
 						}
 						
 						if(direction == 3) {
@@ -458,7 +458,7 @@ void Motor_control(){	//result¿Í directionÀ¸·Î ¾î´À¹æÇâÀ¸·Î È¸ÀüÇÒÁö °áÁ¤
 							else {
 								Motor_Forward();
 							}
-							if(result_XF_trigger == 1 && result_left_XF == 0) {      // ¹è½ÃÇö½Ä Æ®¸®°Å ÄÚµå
+							if(result_XF_trigger == 1 && result_left_XF == 0) {      // ë°°ì‹œí˜„ì‹ íŠ¸ë¦¬ê±° ì½”ë“œ
 								Motor_Forward();
 								osDelay(delay_value);
 								Motor_Stop();
@@ -473,7 +473,7 @@ void Motor_control(){	//result¿Í directionÀ¸·Î ¾î´À¹æÇâÀ¸·Î È¸ÀüÇÒÁö °áÁ¤
 								turnLeft();
 								direction = 12;
 								result_XF_trigger = 0;
-							}                                                                           // ¹è½ÃÇö½Ä Æ®¸®°Å ÄÚµå ³¡
+							}                                                                           // ë°°ì‹œí˜„ì‹ íŠ¸ë¦¬ê±° ì½”ë“œ ë
 						}
 						
 						if(direction == 9) {
@@ -496,7 +496,7 @@ void Motor_control(){	//result¿Í directionÀ¸·Î ¾î´À¹æÇâÀ¸·Î È¸ÀüÇÒÁö °áÁ¤
 							else {
 								Motor_Forward();
 							}
-							if(result_XF_trigger == 1 && result_left_XF == 0) {      // ¹è½ÃÇö½Ä Æ®¸®°Å ÄÚµå
+							if(result_XF_trigger == 1 && result_left_XF == 0) {      // ë°°ì‹œí˜„ì‹ íŠ¸ë¦¬ê±° ì½”ë“œ
 								Motor_Forward();
 								osDelay(delay_value);
 								Motor_Stop();
@@ -511,7 +511,7 @@ void Motor_control(){	//result¿Í directionÀ¸·Î ¾î´À¹æÇâÀ¸·Î È¸ÀüÇÒÁö °áÁ¤
 								turnLeft();
 								direction = 6;
 								result_XF_trigger = 0;
-							}                                                                           // ¹è½ÃÇö½Ä Æ®¸®°Å ÄÚµå ³¡
+							}                                                                           // ë°°ì‹œí˜„ì‹ íŠ¸ë¦¬ê±° ì½”ë“œ ë
 						}
 						
 						
@@ -535,7 +535,7 @@ void Motor_control(){	//result¿Í directionÀ¸·Î ¾î´À¹æÇâÀ¸·Î È¸ÀüÇÒÁö °áÁ¤
 							else {
 								Motor_Forward();
 							}
-							if(result_XF_trigger == 1 && result_left_XF == 0) {      // ¹è½ÃÇö½Ä Æ®¸®°Å ÄÚµå
+							if(result_XF_trigger == 1 && result_left_XF == 0) {      // ë°°ì‹œí˜„ì‹ íŠ¸ë¦¬ê±° ì½”ë“œ
 								Motor_Forward();
 								osDelay(delay_value);
 								Motor_Stop();
@@ -550,13 +550,13 @@ void Motor_control(){	//result¿Í directionÀ¸·Î ¾î´À¹æÇâÀ¸·Î È¸ÀüÇÒÁö °áÁ¤
 								turnLeft();
 								direction = 3;
 								result_XF_trigger = 0;
-							}                                                                           // ¹è½ÃÇö½Ä Æ®¸®°Å ÄÚµå ³¡
+							}                                                                           // ë°°ì‹œí˜„ì‹ íŠ¸ë¦¬ê±° ì½”ë“œ ë
 						}
     }
    
 }
 
-/*Àû¿Ü¼± ÅÂ½ºÅ© ºÎºÐ - ³ªÁß¿¡ »ç¿ë(¼±ÅÃ) */
+/*ì ì™¸ì„  íƒœìŠ¤í¬ ë¶€ë¶„ - ë‚˜ì¤‘ì— ì‚¬ìš©(ì„ íƒ) */
 void IR_Sensor(){
    for(;;){
       
@@ -631,11 +631,11 @@ int main(void)
 	
 	
 	
-    /************************************** ¸ðÅÍ ½ÃÀÛ **************************************/
+    /************************************** ëª¨í„° ì‹œìž‘ **************************************/
    uwPrescalerValue = (SystemCoreClock/2)/1000000;
    
 
-   // PB2 ¸ðÅÍ Àü¿ø ÀÎ°¡¸¦ À§ÇÑ GPIO ÃÊ±âÈ­
+   // PB2 ëª¨í„° ì „ì› ì¸ê°€ë¥¼ ìœ„í•œ GPIO ì´ˆê¸°í™”
    __GPIOB_CLK_ENABLE();
       
    GPIO_InitStruct.Pin = GPIO_PIN_2;
@@ -645,12 +645,12 @@ int main(void)
       
    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
    
-   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET); // MC_EN(PB2) ¸ðÅÍ Àü¿ø 
+   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET); // MC_EN(PB2) ëª¨í„° ì „ì› 
    
    sConfig1.OCMode     = TIM_OCMODE_PWM1;
    sConfig1.OCPolarity = TIM_OCPOLARITY_HIGH;
    sConfig1.OCFastMode = TIM_OCFAST_DISABLE;
-   sConfig1.Pulse = 16500;					// ¿Þ¹ÙÄû ¼Óµµ 
+   sConfig1.Pulse = 16000;					// ì™¼ë°”í€´ ì†ë„ 
    
    TimHandle1.Instance = TIM8;
    TimHandle1.Init.Prescaler     = uwPrescalerValue;
@@ -666,7 +666,7 @@ int main(void)
    sConfig2.OCMode     = TIM_OCMODE_PWM1;
    sConfig2.OCPolarity = TIM_OCPOLARITY_HIGH;
    sConfig2.OCFastMode = TIM_OCFAST_DISABLE;
-   sConfig2.Pulse = 17000;			// ¿À¸¥ ¹ÙÄû ¼Óµµ 
+   sConfig2.Pulse = 17000;			// ì˜¤ë¥¸ ë°”í€´ ì†ë„ 
    
    TimHandle2.Instance = TIM4; 
    TimHandle2.Init.Prescaler     = uwPrescalerValue;
@@ -679,11 +679,11 @@ int main(void)
    HAL_TIM_PWM_ConfigChannel(&TimHandle2, &sConfig2, TIM_CHANNEL_2);
 
    EXTILine_Config(); // Encoder Interrupt Setting
-   /************************************** ¸ðÅÍ ³¡ **************************************/
+   /************************************** ëª¨í„° ë **************************************/
 	 
 	 
 	 
-	  /************************************** ÃÊÀ½ÆÄ ½ÃÀÛ **************************************/
+	  /************************************** ì´ˆìŒíŒŒ ì‹œìž‘ **************************************/
    uwPrescalerValue = ((SystemCoreClock / 2) / 1000000) - 1;   
 	 
    /* Set TIMx instance */
@@ -735,17 +735,17 @@ int main(void)
   
    /* Start channel 3 */   
    HAL_TIM_PWM_Start(&TimHandle4, TIM_CHANNEL_1);
-	 /************************************** ÃÊÀ½ÆÄ ³¡**************************************/
+	 /************************************** ì´ˆìŒíŒŒ ë**************************************/
 	 
    
-	 /************************************** Àû¿Ü¼± ½ÃÀÛ**************************************/
+	 /************************************** ì ì™¸ì„  ì‹œìž‘**************************************/
 	 
-   AdcHandle1.Instance          = ADC3;   // ADC 3¹øºÐ
+   AdcHandle1.Instance          = ADC3;   // ADC 3ë²ˆë¶„
   
    AdcHandle1.Init.ClockPrescaler = ADC_CLOCKPRESCALER_PCLK_DIV2;
    AdcHandle1.Init.Resolution = ADC_RESOLUTION12b;
    AdcHandle1.Init.ScanConvMode = DISABLE;
-   // Mode ¼³Á¤
+   // Mode ì„¤ì •
    AdcHandle1.Init.ContinuousConvMode = DISABLE;
    AdcHandle1.Init.DiscontinuousConvMode = DISABLE;
    AdcHandle1.Init.NbrOfDiscConversion = 0;  
@@ -759,14 +759,14 @@ int main(void)
 
    HAL_ADC_Init(&AdcHandle1);//ADC Initialized
 
-   adcConfig1.Channel = ADC_CHANNEL_11; //Ã¤³Î ¼³Á¤
+   adcConfig1.Channel = ADC_CHANNEL_11; //ì±„ë„ ì„¤ì •
    adcConfig1.Rank = 1;
-   adcConfig1.SamplingTime = ADC_SAMPLETIME_480CYCLES; //»ùÇÃ¸µ ÁÖ±â ¼³Á¤
+   adcConfig1.SamplingTime = ADC_SAMPLETIME_480CYCLES; //ìƒ˜í”Œë§ ì£¼ê¸° ì„¤ì •
    adcConfig1.Offset = 0;
 
    HAL_ADC_ConfigChannel(&AdcHandle1, &adcConfig1);
       
-   AdcHandle2.Instance          = ADC2;   // ADCºÎºÐ
+   AdcHandle2.Instance          = ADC2;   // ADCë¶€ë¶„
 
    AdcHandle2.Init.ClockPrescaler = ADC_CLOCKPRESCALER_PCLK_DIV2;
    AdcHandle2.Init.Resolution = ADC_RESOLUTION12b;
@@ -790,7 +790,7 @@ int main(void)
 
    HAL_ADC_ConfigChannel(&AdcHandle2, &adcConfig2);
    
-   AdcHandle3.Instance          = ADC1;   // ADCºÎºÐ
+   AdcHandle3.Instance          = ADC1;   // ADCë¶€ë¶„
 
    AdcHandle3.Init.ClockPrescaler = ADC_CLOCKPRESCALER_PCLK_DIV2;
    AdcHandle3.Init.Resolution = ADC_RESOLUTION12b;
@@ -812,12 +812,12 @@ int main(void)
    adcConfig3.SamplingTime = ADC_SAMPLETIME_480CYCLES;
    adcConfig3.Offset = 0;   
    HAL_ADC_ConfigChannel(&AdcHandle3, &adcConfig3);
-		/************************************** Àû¿Ü¼± ³¡**************************************/            
+		/************************************** ì ì™¸ì„  ë**************************************/            
             
    
-	 /**** ES+L9.+Embedded+OS - 28 page Âü°í ****/
+	 /**** ES+L9.+Embedded+OS - 28 page ì°¸ê³  ****/
 		 
-	 /**********¿©±â¿¡ Task ¸¦ »ý¼ºÇÏ½Ã¿À********/
+	 /**********ì—¬ê¸°ì— Task ë¥¼ ìƒì„±í•˜ì‹œì˜¤********/
 
 	 
 	 xTaskCreate( Detect_obstacle, "obstacle", 1000, NULL, 2, NULL);
